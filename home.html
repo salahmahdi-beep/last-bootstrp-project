@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Al-Hayat Hospital | Management System</title>
+
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ✅ Our CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ══════════════ SIDEBAR ══════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon" style="padding:0;overflow:hidden;border-radius:10px">
+                <img src="data:image/jpeg;base64,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"
+                    style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div class="logo-text"><strong>Al-Hayat</strong><span>Hospital System</span></div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-label-section">Main</div>
+            <div class="nav-item active" onclick="go('dashboard',this)">
+                <div class="nav-icon"><i class="fas fa-chart-pie"></i></div><span>Dashboard</span></div>
+            <div class="nav-item" onclick="go('reception',this)">
+                <div class="nav-icon"><i class="fas fa-concierge-bell"></i></div><span>Reception</span></div>
+            <div class="nav-label-section">Medical</div>
+            <div class="nav-item" onclick="go('patients',this)">
+                <div class="nav-icon"><i class="fas fa-users"></i></div><span>Patients</span></div>
+            <div class="nav-item" onclick="go('appointments',this)">
+                <div class="nav-icon"><i class="fas fa-calendar-check"></i></div><span>Appointments</span>
+                <span class="nav-badge" id="notifBadge" style="display:none">0</span>
+            </div>
+            <div class="nav-item" onclick="go('doctors',this)">
+                <div class="nav-icon"><i class="fas fa-user-md"></i></div><span>Doctors</span></div>
+            <div class="nav-item" onclick="go('laboratory',this)">
+                <div class="nav-icon"><i class="fas fa-flask"></i></div><span>Laboratory</span></div>
+            <div class="nav-item" onclick="go('rooms',this)">
+                <div class="nav-icon"><i class="fas fa-bed"></i></div><span>Rooms</span></div>
+            <div class="nav-item" onclick="go('staff',this)">
+                <div class="nav-icon"><i class="fas fa-id-badge"></i></div><span>Staff</span></div>
+            <div class="nav-label-section">Finance</div>
+            <div class="nav-item" onclick="go('invoice',this)">
+                <div class="nav-icon"><i class="fas fa-file-invoice-dollar"></i></div><span>Invoices</span></div>
+            <div class="nav-item" onclick="go('reports',this)">
+                <div class="nav-icon"><i class="fas fa-chart-bar"></i></div><span>Reports</span></div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-av">AD</div>
+                <div>
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">Super Admin</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ══════════════ HEADER ══════════════ -->
+    <header class="header" id="header">
+        <div class="header-left">
+            <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            <div class="breadcrumb">
+                <h4 id="bc-title">Dashboard</h4>
+                <p id="bc-sub">Welcome back, Admin</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input id="globalSearch" placeholder="Search patients..." onkeydown="if(event.key==='Enter')globalSearchFn(this.value)"></div>
+            <button class="hbtn" onclick="toggleDark()" title="Dark Mode"><i class="fas fa-moon" id="darkIcon"></i></button>
+            <button class="hbtn" onclick="showNotifs()" title="Notifications" style="position:relative"><i class="fas fa-bell"></i><span class="notif-dot" id="notifDot" style="display:none"></span></button>
+            <button class="hbtn"><i class="fas fa-user-circle"></i></button>
+        </div>
+    </header>
+
+    <!-- ══════════════ MAIN ══════════════ -->
+    <main class="main" id="main">
+
+        <!-- ████ DASHBOARD ████ -->
+        <section id="page-dashboard" class="page active">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Dashboard Overview</h2>
+                    <p>Real-time hospital statistics</p>
+                </div>
+                <div class="hdr-actions">
+                    <button class="btn btn-secondary btn-sm" onclick="refreshDash()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    <button class="btn btn-primary btn-sm" onclick="go('patients',null);openPatientModal()"><i class="fas fa-plus"></i> New Patient</button>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-user-injured"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-patients">0</div>
+                        <div class="stat-lbl">Total Patients</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> Active</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-teal"><i class="fas fa-calendar-check"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-appts">0</div>
+                        <div class="stat-lbl">Appointments</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> This month</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-green"><i class="fas fa-user-md"></i></div>
+                    <div>
+                        <div class="stat-val">20</div>
+                        <div class="stat-lbl">Doctors</div>
+                        <div class="stat-change up"><i class="fas fa-circle"></i> All Active</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-orange"><i class="fas fa-dollar-sign"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-rev">$0</div>
+                        <div class="stat-lbl">Revenue</div>
+                        <div class="stat-change up"><i class="fas fa-arrow-up"></i> From invoices</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dash-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line"></i> Patient Statistics</h5><span class="badge b-teal">8 Months</span></div>
+                    <div class="card-body"><canvas id="mainChart" height="55"></canvas></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-calendar-day"></i> Today</h5><span class="badge b-green" id="todayBadge">0</span></div>
+                        <div class="card-body p0" style="padding:12px 16px">
+                            <div id="todayList"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-history"></i> Activity</h5>
+                        </div>
+                        <div class="card-body p0" style="padding:12px 16px">
+                            <div id="activityList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-grid mt16" style="grid-template-columns:repeat(4,1fr);margin-top:20px">
+                <div class="stat-card">
+                    <div class="stat-icon si-red"><i class="fas fa-file-invoice"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-inv">0</div>
+                        <div class="stat-lbl">Invoices</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-purple"><i class="fas fa-bed"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-rooms">—</div>
+                        <div class="stat-lbl">Available Rooms</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-teal"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-pend">—</div>
+                        <div class="stat-lbl">Pending</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-flask"></i></div>
+                    <div>
+                        <div class="stat-val" id="sd-labs">—</div>
+                        <div class="stat-lbl">Lab Pending</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ RECEPTION ████ -->
+        <section id="page-reception" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2><i class="fas fa-concierge-bell" style="color:var(--teal);margin-right:10px"></i>Reception Desk</h2>
+                    <p>Patient check-in, queue management & walk-ins</p>
+                </div>
+                <div class="hdr-actions">
+                    <button class="btn btn-secondary btn-sm" onclick="go('patients',null);openPatientModal()"><i class="fas fa-user-plus"></i> Register Patient</button>
+                    <button class="btn btn-primary" onclick="openApptModal()"><i class="fas fa-plus"></i> Walk-In / Book</button>
+                </div>
+            </div>
+
+            <!-- Reception KPI Strip -->
+            <div class="rec-stats" id="recStats"></div>
+
+            <!-- Quick Action Tiles -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+                <button class="btn btn-primary" style="padding:16px;flex-direction:column;gap:6px;height:auto;border-radius:14px;justify-content:center" onclick="openApptModal()">
+                    <i class="fas fa-calendar-plus" style="font-size:1.4rem"></i>
+                    <span style="font-size:.8rem;font-weight:600">Book Appointment</span>
+                </button>
+                <button class="btn btn-secondary" style="padding:16px;flex-direction:column;gap:6px;height:auto;border-radius:14px;justify-content:center" onclick="go('patients',null);openPatientModal()">
+                    <i class="fas fa-user-plus" style="font-size:1.4rem;color:var(--teal)"></i>
+                    <span style="font-size:.8rem;font-weight:600">New Patient</span>
+                </button>
+                <button class="btn btn-secondary" style="padding:16px;flex-direction:column;gap:6px;height:auto;border-radius:14px;justify-content:center" onclick="go('invoice',null)">
+                    <i class="fas fa-file-invoice-dollar" style="font-size:1.4rem;color:var(--green)"></i>
+                    <span style="font-size:.8rem;font-weight:600">Generate Invoice</span>
+                </button>
+                <button class="btn btn-secondary" style="padding:16px;flex-direction:column;gap:6px;height:auto;border-radius:14px;justify-content:center" onclick="go('laboratory',null)">
+                    <i class="fas fa-flask" style="font-size:1.4rem;color:var(--blue)"></i>
+                    <span style="font-size:.8rem;font-weight:600">Lab Request</span>
+                </button>
+            </div>
+
+            <div class="col-row">
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list-ol" style="color:var(--teal)"></i> Patient Queue</h5>
+                            <span class="badge b-teal" id="queueCount">0</span>
+                        </div>
+                        <div class="card-body" id="recQueue"></div>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-check-double" style="color:var(--green)"></i> Today's Check-ins</h5>
+                        </div>
+                        <div class="card-body p0" style="padding:12px">
+                            <div id="recCheckins"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-clock" style="color:var(--orange)"></i> Live Clock</h5>
+                        </div>
+                        <div class="card-body" style="text-align:center;padding:16px 12px">
+                            <div id="recClock" style="font-size:2rem;font-weight:800;color:var(--teal);font-family:'JetBrains Mono',monospace;letter-spacing:2px"></div>
+                            <div id="recDate" style="font-size:.78rem;color:var(--text3);margin-top:4px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ PATIENTS ████ -->
+        <section id="page-patients" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Patient Management</h2>
+                    <p>Register and manage all patients</p>
+                </div>
+                <div class="hdr-actions">
+                    <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input placeholder="Search..." oninput="renderPatients(this.value)" id="ptSearch"></div>
+                    <button class="btn btn-primary" onclick="openPatientModal()"><i class="fas fa-plus"></i> Add Patient</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p0">
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Age</th>
+                                    <th>Phone</th>
+                                    <th>Doctor</th>
+                                    <th>Blood</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ptTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ APPOINTMENTS ████ -->
+        <section id="page-appointments" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Appointments</h2>
+                    <p>Schedule & manage appointments</p>
+                </div>
+                <div class="hdr-actions">
+                    <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input placeholder="Search..." oninput="renderAppts(this.value)"></div>
+                    <button class="btn btn-primary" onclick="openApptModal()"><i class="fas fa-plus"></i> Book</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p0">
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Type</th>
+                                    <th>Fee</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="apptTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ DOCTORS ████ -->
+        <section id="page-doctors" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Our Medical Team</h2>
+                    <p>20 expert doctors</p>
+                </div>
+                <div class="hdr-actions">
+                    <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input placeholder="Search..." oninput="renderDoctors('',this.value)"></div>
+                    <select onchange="renderDoctors(this.value)" id="docFilter" style="padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-family:inherit;font-size:.82rem;color:var(--text1);cursor:pointer"></select>
+                </div>
+            </div>
+            <div class="doc-grid" id="docGrid"></div>
+        </section>
+
+        <!-- ████ LABORATORY ████ -->
+        <section id="page-laboratory" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Laboratory</h2>
+                    <p>Tests, results & diagnostics</p>
+                </div>
+                <div class="hdr-actions">
+                    <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input placeholder="Search..." oninput="renderLab(this.value)"></div>
+                    <button class="btn btn-primary" onclick="openLabModal()"><i class="fas fa-plus"></i> Add Test</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p0">
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Test</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Result</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="labTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ ROOMS ████ -->
+        <section id="page-rooms" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Room Management</h2>
+                    <p>Click a room to view & edit details</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddRoomModal()"><i class="fas fa-plus"></i> Add Room</button>
+            </div>
+            <div class="rooms-stats" id="roomStats"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="rooms-grid" id="roomsGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ STAFF ████ -->
+        <section id="page-staff" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Support Staff</h2>
+                    <p>Click any card to view profile &amp; salary</p>
+                </div>
+                <div class="hdr-actions">
+                    <div class="search-box"><i class="fas fa-search" style="color:var(--text3)"></i><input placeholder="Search staff..." oninput="renderStaff(this.value)"></div>
+                    <span class="badge b-teal" style="padding:8px 14px;font-size:.8rem"><i class="fas fa-users"></i> 15 Members</span></div>
+            </div>
+            <div class="staff-grid" id="staffGrid"></div>
+        </section>
+
+        <!-- ████ INVOICES ████ -->
+        <section id="page-invoice" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Invoices</h2>
+                    <p>Billing & payment</p>
+                </div>
+            </div>
+            <div class="col-row">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-invoice-dollar"></i> Generate Invoice</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="fg mb8" style="position:relative" id="inv-pt-wrap">
+                            <label>Patient (search or type name)</label>
+                            <input id="inv-pt-input" placeholder="Type patient name or ID..." autocomplete="off" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;width:100%;font-size:.85rem;font-family:inherit;background:var(--surface);color:var(--text1);outline:none">
+                            <input type="hidden" id="inv-pt">
+                            <div id="inv-pt-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1.5px solid var(--teal);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:9999;max-height:180px;overflow-y:auto;margin-top:2px"></div>
+                        </div>
+                        <style>
+                            .inv-pt-opt {
+                                padding: 10px 14px;
+                                cursor: pointer;
+                                font-size: .83rem;
+                                border-bottom: 1px solid var(--border)
+                            }
+                            
+                            .inv-pt-opt:hover {
+                                background: var(--surface2)
+                            }
+                            
+                            .inv-pt-opt:last-child {
+                                border-bottom: none
+                            }
+                        </style>
+                        <div class="form-divider"></div>
+                        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:12px">Service Costs ($)</div>
+                        <div class="fg mb8"><label><i class="fas fa-pills" style="color:var(--blue)"></i> Medicine</label><input id="inv-med" type="number" placeholder="0.00" min="0"></div>
+                        <div class="fg mb8"><label><i class="fas fa-bed" style="color:var(--purple)"></i> Room</label><input id="inv-room" type="number" placeholder="0.00" min="0"></div>
+                        <div class="fg mb8"><label><i class="fas fa-user-md" style="color:var(--green)"></i> Doctor</label><input id="inv-doc" type="number" placeholder="0.00" min="0"></div>
+                        <div class="fg mb8"><label><i class="fas fa-plus-circle" style="color:var(--orange)"></i> Other</label><input id="inv-oth" type="number" placeholder="0.00" min="0"></div>
+                        <div class="fg mb8"><label>Notes</label><textarea id="inv-notes" placeholder="Additional notes..."></textarea></div>
+                        <div class="form-divider" style="margin-bottom:12px"></div>
+                        <div class="flex gap8">
+                            <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="generateInvoice()"><i class="fas fa-file-invoice"></i> Generate</button>
+                            <button class="btn btn-secondary" onclick="printInv()"><i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-eye"></i> Preview</h5><button class="btn btn-secondary btn-sm" onclick="printInv()"><i class="fas fa-print"></i> Print</button></div>
+                        <div class="card-body" id="invPreview">
+                            <div class="empty-state"><i class="fas fa-file-invoice-dollar"></i>
+                                <p>Generate to preview</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-history"></i> History</h5>
+                        </div>
+                        <div class="card-body p0">
+                            <div class="tbl-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Patient</th>
+                                            <th>Date</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="invTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ████ REPORTS ████ -->
+        <section id="page-reports" class="page">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2>Reports & Analytics</h2>
+                    <p>Hospital performance</p>
+                </div>
+            </div>
+            <div class="col-row">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-pie"></i> Revenue</h5>
+                    </div>
+                    <div class="card-body"><canvas id="repChart" height="200"></canvas>
+                        <div class="text-center mt12">
+                            <div class="stat-val" id="repRev">$0</div>
+                            <div class="text-muted text-sm">Total Revenue</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-user-md"></i> By Doctor</h5>
+                        </div>
+                        <div class="card-body" id="repDocs"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-info-circle"></i> Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex gap16">
+                                <div>
+                                    <p class="text-muted text-sm">Patients</p>
+                                    <div class="stat-val" style="font-size:1.3rem" id="repP">0</div>
+                                </div>
+                                <div>
+                                    <p class="text-muted text-sm">Appointments</p>
+                                    <div class="stat-val" style="font-size:1.3rem" id="repA">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- end main -->
+
+    <!-- ══════════════════════════════════════════
+   MODALS — All use .modal-overlay + .open class
+══════════════════════════════════════════ -->
+
+    <!-- ▶ PATIENT MODAL -->
+    <div class="modal-overlay" id="modal-patient">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-user-plus"></i> <span id="pt-modal-title">Add New Patient</span></h3>
+                <button class="modal-close-btn" onclick="closeM('modal-patient');clearPtForm()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="fg"><label>Full Name *</label><input id="pt-name" placeholder="Patient full name"><span class="errmsg" id="err-pt-name"></span></div>
+                    <div class="fg"><label>Age *</label><input id="pt-age" type="number" placeholder="Age" min="0" max="130"><span class="errmsg" id="err-pt-age"></span></div>
+                    <div class="fg"><label>Phone *</label><input id="pt-phone" placeholder="Phone number"><span class="errmsg" id="err-pt-phone"></span></div>
+                    <div class="fg"><label>Gender</label><select id="pt-gender"><option value="">-- Select --</option><option>Male</option><option>Female</option></select></div>
+                    <div class="fg"><label>Assigned Doctor *</label><select id="pt-doctor" class="doctor-sel"><option value="">-- Select Doctor --</option></select><span class="errmsg" id="err-pt-doctor"></span></div>
+                    <div class="fg"><label>Blood Type</label><select id="pt-blood"><option value="">-- Select --</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeM('modal-patient');clearPtForm()">Cancel</button>
+                <button class="btn btn-primary" id="pt-save-btn" onclick="savePatient()"><i class="fas fa-save"></i> Save Patient</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▶ APPOINTMENT MODAL -->
+    <div class="modal-overlay" id="modal-appt">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-calendar-plus"></i> <span id="ap-modal-title">Book Appointment</span></h3>
+                <button class="modal-close-btn" onclick="closeM('modal-appt')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="fg"><label>Patient *</label><select id="ap-patient" class="patient-sel"><option value="">-- Select --</option></select><span class="errmsg" id="err-ap-patient"></span></div>
+                    <div class="fg"><label>Doctor *</label><select id="ap-doctor" class="doctor-sel" onchange="apptFee()"><option value="">-- Select --</option></select><span class="errmsg" id="err-ap-doctor"></span></div>
+                    <div class="fg"><label>Date *</label><input id="ap-date" type="date"><span class="errmsg" id="err-ap-date"></span></div>
+                    <div class="fg"><label>Time *</label><input id="ap-time" type="time"><span class="errmsg" id="err-ap-time"></span></div>
+                    <div class="fg"><label>Type</label><select id="ap-type"><option>Checkup</option><option>Follow-up</option><option>Emergency</option><option>Surgery</option><option>Consultation</option><option>Lab Test</option></select></div>
+                    <div class="fg"><label>Fee Info</label>
+                        <div id="ap-fee-info" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.83rem;color:var(--green);font-weight:600;min-height:42px;background:var(--surface2)">Select a doctor to see fee</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeM('modal-appt')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAppt()"><i class="fas fa-calendar-check"></i> Book</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▶ DOCTOR PROFILE MODAL -->
+    <div class="modal-overlay" id="modal-doc-profile">
+        <div class="modal-box wide">
+            <div class="modal-head">
+                <h3><i class="fas fa-id-card"></i> Doctor Profile</h3>
+                <button class="modal-close-btn" onclick="closeM('modal-doc-profile')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="docProfileContent"></div>
+        </div>
+    </div>
+
+    <!-- ▶ ROOM DETAIL MODAL -->
+    <div class="modal-overlay" id="modal-room">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-bed"></i> Room Details</h3>
+                <button class="modal-close-btn" onclick="closeM('modal-room')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="fg"><label>Room Number</label><input id="rm-number" placeholder="e.g. R021"></div>
+                    <div class="fg"><label>Type</label><select id="rm-type"><option>General</option><option>ICU</option><option>Surgery</option><option>Private</option><option>Emergency</option></select></div>
+                    <div class="fg"><label>Status</label><select id="rm-status"><option value="available">Available</option><option value="occupied">Occupied</option><option value="maintenance">Maintenance</option></select></div>
+                    <div class="fg"><label>Patient (if occupied)</label><select id="rm-patient" class="room-patient-sel"><option value="">-- No patient --</option></select></div>
+                </div>
+                <div class="fg mt8"><label>Notes</label><textarea id="rm-notes" placeholder="Any notes about this room..."></textarea></div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-danger" id="rm-del-btn" onclick="deleteRoom()"><i class="fas fa-trash"></i> Delete</button>
+                <button class="btn btn-secondary" onclick="closeM('modal-room')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveRoom()"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▶ STAFF PROFILE MODAL -->
+    <div class="modal-overlay" id="modal-staff">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-id-badge"></i> Staff Profile</h3>
+                <button class="modal-close-btn" onclick="closeM('modal-staff')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="staffProfileContent"></div>
+        </div>
+    </div>
+
+
+    <!-- ▶ STAFF EDIT MODAL -->
+    <div class="modal-overlay" id="modal-staff-edit">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-user-edit"></i> Edit Staff Member</h3>
+                <button class="modal-close-btn" onclick="closeM('modal-staff-edit')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="fg"><label>Full Name</label><input id="sf-name" placeholder="Full name"></div>
+                    <div class="fg"><label>Role / Position</label><input id="sf-role" placeholder="e.g. Head Nurse"></div>
+                    <div class="fg"><label>Department</label><input id="sf-dept" placeholder="e.g. ICU"></div>
+                    <div class="fg"><label>Monthly Salary ($)</label><input id="sf-salary" type="number" placeholder="0" min="0"></div>
+                    <div class="fg"><label>Phone</label><input id="sf-phone" placeholder="+966 50 ..."></div>
+                    <div class="fg"><label>Email</label><input id="sf-email" placeholder="email@alhayat.com"></div>
+                </div>
+                <div class="fg mt8"><label>Profile Photo URL (paste image link)</label><input id="sf-img" placeholder="https://...image-url.jpg"></div>
+                <div class="fg mt8"><label>Status</label><select id="sf-status"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeM('modal-staff-edit')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveStaff()"><i class="fas fa-save"></i> Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▶ LAB MODAL -->
+    <div class="modal-overlay" id="modal-lab">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3><i class="fas fa-flask"></i> <span id="lab-modal-title">Add Lab Test</span></h3>
+                <button class="modal-close-btn" onclick="closeM('modal-lab')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="fg"><label>Test Name *</label><input id="lab-test" placeholder="e.g. Blood CBC, MRI..."></div>
+                    <div class="fg"><label>Patient *</label><select id="lab-patient" class="patient-sel"><option value="">-- Select --</option></select></div>
+                    <div class="fg"><label>Doctor *</label><select id="lab-doctor" class="doctor-sel"><option value="">-- Select --</option></select></div>
+                    <div class="fg"><label>Result</label><select id="lab-result"><option value="—">Pending / Unknown</option><option>Normal</option><option>High</option><option>Low</option></select></div>
+                    <div class="fg"><label>Status</label><select id="lab-status"><option value="Pending">Pending</option><option value="Processing">Processing</option><option value="Completed">Completed</option></select></div>
+                    <div class="fg"><label>Date</label><input id="lab-date" type="date"></div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeM('modal-lab')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveLab()"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-wrap"></div>
+
+    <!-- ══════════════════════════════════════════
+   ALL JAVASCRIPT
+══════════════════════════════════════════ -->
+
+    <!-- ✅ Our JS (loaded LAST so DOM is ready) -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
+
+</html>
